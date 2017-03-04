@@ -23,9 +23,9 @@ Als Abhängigkeiten muss noch das GitHub Repository [ASCII-Pony](https://github.
 cd ~/.irssi/
 git clone https://github.com/L3Dokt0r/ponybot.git
 git clone https://github.com/L3Dokt0r/ASCII-Pony.git
-mkdir script
-ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/script/ponybot.pl
+mkdir scripts
+ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/ponybot.pl
 mkdir script/autojoin
-ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/script/autojoin/ponybot.pl
+ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/autojoin/ponybot.pl
 
 ```

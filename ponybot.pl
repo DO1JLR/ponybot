@@ -28,8 +28,10 @@ $VERSION = "1.0";
 # important Variables:
 our $channels = "ccczh|see-base"; # Benutze '|' zum trennen der Channels
 
-Irssi::signal_add 'message public', 'sig_message_public';
 
+our $user = getpwuid( $< );
+our @pony;
+Irssi::signal_add 'message public', 'sig_message_public';
 
 sub sig_message_public {
     my ($server, $msg, $nick, $nick_addr, $target) = @_;
@@ -37,7 +39,22 @@ sub sig_message_public {
         # different messages to do something:
         if ($msg =~ m/!pony/i){ #Reagiert auf "!pony"
             $server->command("msg $target Hey $nick, du hast dir ein Pony gewünscht:");
-            $server->command("msg $target Bitte warte...");
-		}
+            get_pony();
+            for my $mlp (@pony){
+                $server->command("msg $target $mlp");
+            }
+        }
+    }
+}
+
+sub get_pony {
+    my $dirname = "/home/$user/.irssi/ASCII-Pony/rendered/irc/";
+    my @ascii;
+    opendir(DIR,"$dirname") || die $!;
+        @ascii = readdir(DIR);
+    close DIR;
+    open (DATEI, "/home/$user/.irssi/ASCII-Pony/rendered/irc/$ascii[int(rand($#ascii))]") or die $!;
+    @pony = <DATEI>;
+    close (DATEI);   
 }
 
