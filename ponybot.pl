@@ -43,7 +43,7 @@ sub sig_message_public {
             for my $mlp (@pony){
                 $server->command("msg $target $mlp");
             }
-            $server->command("msg script load ponybot.pl");
+            $server->command("/script load ponybot.pl");
         }
     }
 }
