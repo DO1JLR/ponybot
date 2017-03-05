@@ -2,8 +2,8 @@
 Ein irssi-bot, der Ponys anzeigt!
 
 ##Und wofür?
-Die Idee ist, auf bestimmte keywörter im IRC Channel moeglichst performat ein Pony zu malen.
-Das sollte natürlich auf mehrere Bots aufgeteilt sein, da es ein Raid limit von mehreren Zeilen gibt, die man in einer bestimmten Zeit pasten kann...
+Die Idee ist, auf bestimmte Schlüsselwörter im IRC Channel (derzeit ``!pony``) ein ASCII-Pony zu malen.
+Irgendwann könnte das natürlich mal auf mehrere Bots aufgeteilt werden, da sich der IRC oft sehr schwer tut bewliebig viele Zeilen direkt hintereinander ohne Zeitlichen abstand zu schreiben...
 
 ##Und wie setze ich das wo ein?
 Das aussehen der Ponys ist in dem JSON File gespeichert. 
@@ -28,4 +28,9 @@ ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/ponybot.pl
 mkdir script/autojoin
 ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/autojoin/ponybot.pl
 
+```
+
+Und in irssi:
+```
+/script load ponybot.pl
 ```
