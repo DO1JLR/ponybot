@@ -26,7 +26,7 @@ $VERSION = "1.0";
     license         => "GPL-3.0"
 );
 # important Variables:
-our $channels = "ccczh|see-base"; # Benutze '|' zum trennen der Channels
+our $channels = "ccczh|see-base|ponyville"; # Benutze '|' zum trennen der Channels
 
 
 our $user = getpwuid( $< );
