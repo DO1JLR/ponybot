@@ -56,7 +56,20 @@ sub sig_message_public {
             for my $mlp (@pony){
                 $server->command("msg $target $mlp");
             }
-            no_spam;
+            $server->command("msg $nick Hey $nick, du hast dir vorhin ein Pony im Channel $target gewünscht.");
+            $server->command("msg $nick Das ist voll okay und kommt auch meistens echt gut an");
+            $server->command("msg $nick ... ");
+            $server->command("msg $nick ABER man muss es ja nicht übertreiben!");
+            $server->command("msg $nick Wenn du regelmäßig Ponys haben möchtest, dann besuche doch mal");
+            $server->command("msg $nick den Kanal #ponyville auch hackint.org oder chaostreff.ch");
+            $server->command("msg $nick :D");
+            $server->command("msg $nick Wenn dir der Bot gefällt oder du funktionen vermisst:");
+            $server->command("msg $nick Schau doch mal auf https://github.com/L3Dokt0r/ponybot vorbei");
+            $server->command("msg $nick Und hier noch ein Pony:");
+            get_pony();
+            for my $mlp (@pony){
+                $server->command("msg $nick $mlp");
+            }
         }
     }
     $server->command("/script load ponybot.pl");
@@ -72,19 +85,4 @@ sub get_pony {
     @pony = <DATEI>; # Save pony as global array
     close (DATEI);   
 }
-sub no_spam {
-    $server->command("msg $nick Hey $nick, du hast dir vorhin ein Pony im Channel $target gewünscht.");
-    $server->command("msg $nick Das ist voll okay und kommt auch meistens echt gut an");
-    $server->command("msg $nick ... ");
-    $server->command("msg $nick ABER man muss es ja nicht übertreiben!");
-    $server->command("msg $nick Wenn du regelmäßig Ponys haben möchtest, dann besuche doch mal");
-    $server->command("msg $nick den Kanal #ponyville auch hackint.org oder chaostreff.ch");
-    $server->command("msg $nick :D");
-    $server->command("msg $nick Wenn dir der Bot gefällt oder du funktionen vermisst:");
-    $server->command("msg $nick Schau doch mal auf https://github.com/L3Dokt0r/ponybot vorbei")
-    $server->command("msg $nick Und hier noch ein Pony:")
-    get_pony;
-    for my $mlp (@pony){
-        $server->command("msg $nick $mlp");
-    }
-}
+
