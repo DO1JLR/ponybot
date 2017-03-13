@@ -20,42 +20,71 @@ $VERSION = "1.0";
     authors         => "L3D",
     contact         => 'l3d@see-base.de',
     name            => "Ponybot",
-    description     => "Ein Pony-IRC-Bot, der bei aktivierung ponys.",
-    version         => "0.1",
+    description     => "A pony-irssi bot to draw colored ascii ponys in some channels.",
+    version         => "0.2",
     status			=> "alpha",
     license         => "GPL-3.0"
 );
-# important Variables:
-our $channels = "ccczh|see-base|ponyville"; # Benutze '|' zum trennen der Channels
+# important global Variables:
+our $main_channel = "ponyville"; #    Use '|' for multiple channels
+our $other_channels = "ccczh|spam"; # Use '|' for multiple channels
+our $keyword = "pony";
 
-
+# programm
 our $user = getpwuid( $< );
 our @pony;
 Irssi::signal_add 'message public', 'sig_message_public';
 
 sub sig_message_public {
     my ($server, $msg, $nick, $nick_addr, $target) = @_;
-    if ($target =~ m/#(?:$channels)/) { # only operate in these channels
-        # different messages to do something:
-        if ($msg =~ m/!pony/i){ #Reagiert auf "!pony"
+    if ($target =~ m/#(?:$main_channel)/) { # only operate in these channels
+        # listen to keyword to do something:
+        if ($msg =~ m/!(?:$keyword)/i){ # listening for "!$keyword"
             $server->command("msg $target Hey $nick, du hast dir ein Pony gewünscht:");
-            get_pony();
+            get_pony(); # execute 'get_pony' and use a new pony
             for my $mlp (@pony){
                 $server->command("msg $target $mlp");
             }
-            $server->command("/script load ponybot.pl");
         }
     }
+    elsif ($target =~ m/#(?:$other_channels)/) { # now only operate in these Channels...
+        # Listening for a keyword 2 do sth.
+        if ($msg =~ m/!(?:$keyword)/i){ # listening for "!$keyword"
+            $server->command("msg $target Hey $nick, du hast dir ein Pony gewünscht:");
+            # 2DO: make a few little ponys for big irc channels...
+            get_pony(); # execute 'get_pony' and use a new pony
+            for my $mlp (@pony){
+                $server->command("msg $target $mlp");
+            }
+            no_spam;
+        }
+    }
+    $server->command("/script load ponybot.pl");
 }
 
 sub get_pony {
-    my $dirname = "/home/$user/.irssi/ASCII-Pony/rendered/irc/";
+    my $dirname = "/home/$user/.irssi/ASCII-Pony/rendered/irc/"; # define the directory with the ascii ponys
     my @ascii;
-    opendir(DIR,"$dirname") || die $!;
+    opendir(DIR,"$dirname") || die $!; # How many ponys could we use?
         @ascii = readdir(DIR);
     close DIR;
-    open (DATEI, "/home/$user/.irssi/ASCII-Pony/rendered/irc/$ascii[int(rand($#ascii))]") or die $!;
-    @pony = <DATEI>;
+    open (DATEI, "/home/$user/.irssi/ASCII-Pony/rendered/irc/$ascii[int(rand($#ascii))-1]") or die $!; # Choose a 'random' pony
+    @pony = <DATEI>; # Save pony as global array
     close (DATEI);   
 }
-
+sub no_spam {
+    $server->command("msg $nick Hey $nick, du hast dir vorhin ein Pony im Channel $target gewünscht.");
+    $server->command("msg $nick Das ist voll okay und kommt auch meistens echt gut an");
+    $server->command("msg $nick ... ");
+    $server->command("msg $nick ABER man muss es ja nicht übertreiben!");
+    $server->command("msg $nick Wenn du regelmäßig Ponys haben möchtest, dann besuche doch mal");
+    $server->command("msg $nick den Kanal #ponyville auch hackint.org oder chaostreff.ch");
+    $server->command("msg $nick :D");
+    $server->command("msg $nick Wenn dir der Bot gefällt oder du funktionen vermisst:");
+    $server->command("msg $nick Schau doch mal auf https://github.com/L3Dokt0r/ponybot vorbei")
+    $server->command("msg $nick Und hier noch ein Pony:")
+    get_pony;
+    for my $mlp (@pony){
+        $server->command("msg $nick $mlp");
+    }
+}

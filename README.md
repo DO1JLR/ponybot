@@ -12,6 +12,11 @@ Am besten diese Dateien anpassen und dann ausprobieren.
 
 ##Hä?
 Dieser "bot" ist ein Perl Script, das für das Programm irssi ist... 
+Einfach irssi in einem screen oder tmux starten, dich zu einem Server verbinden.
+Dort einen Kanal joinen.
+Dieses git und ASCII-Pony clonen. Ggf. den Kanal in den globalen variablen ergänzen.
+Sich über ponys freuen!
+
 
 ##Abhängigkeiten
 Als Abhängigkeiten muss noch das GitHub Repository [ASCII-Pony](https://github.com/L3Dokt0r/ASCII-Pony) geklont werden.
@@ -25,7 +30,7 @@ git clone https://github.com/L3Dokt0r/ponybot.git
 git clone https://github.com/L3Dokt0r/ASCII-Pony.git
 mkdir scripts
 ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/ponybot.pl
-mkdir script/autojoin
+mkdir scripts/autojoin
 ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/autojoin/ponybot.pl
 
 ```
