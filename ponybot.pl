@@ -26,9 +26,9 @@ $VERSION = "1.0";
     license         => "GPL-3.0"
 );
 # important global Variables:
-our $main_channel = "ponyville"; #    Use '|' for multiple channels
+our $main_channel = "ponyville|C6"; #    Use '|' for multiple channels
 our $other_channels = "ccczh|spam"; # Use '|' for multiple channels
-our $keyword = "pony";
+our $keyword = "pony|cyber";
 
 # programm
 our $user = getpwuid( $< );
@@ -42,6 +42,7 @@ sub sig_message_public {
         if ($msg =~ m/!(?:$keyword)/i){ # listening for "!$keyword"
             $server->command("msg $target Hey $nick, du hast dir ein Pony gewünscht:");
             get_pony(); # execute 'get_pony' and use a new pony
+            get_pony() if (@pony eq "");
             for my $mlp (@pony){
                 $server->command("msg $target $mlp");
             }
