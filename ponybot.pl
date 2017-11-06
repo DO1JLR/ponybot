@@ -21,7 +21,7 @@ $VERSION = "1.0";
     contact         => 'l3d@see-base.de',
     name            => "Ponybot",
     description     => "A pony-irssi bot to draw colored ascii ponys in some channels.",
-    version         => "0.3",
+    version         => "0.4",
     status			=> "alpha",
     license         => "GPL-3.0"
 );
@@ -53,13 +53,15 @@ sub sig_message_public {
                 # print $destination_channel;
                 $server->command("msg $target Hey $nick, du schickst ein Pony in den Channel $destination_channel");
                 get_pony(); # execute 'get_pony' and use a new pony
+                $server->command("join -window $destination_channel");
                 # print @pony; # uncomment for advanced debugging
                 print "[I] Debug-SendPony: $tmp"; 
                 # for my $s (@tmp_2){ print "$s\n"; } # uncomment for advanced debugging
                 for my $mlp (@pony){
                     $server->command("msg $destination_channel $mlp");
                 }
-                $server->command("msg $destination_channel Dieses Pony wurde versendet durch $nick aus dem Channel '#ponyville'.")
+                $server->command("msg $destination_channel Dieses Pony wurde versendet durch $nick aus dem Channel '#ponyville'.");
+                $server->command("window close"); 
             }
         }
         # listen to keyword to do something:
