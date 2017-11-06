@@ -28,6 +28,7 @@ $VERSION = "1.0";
 # important global Variables:
 our $main_channel = "ponyville"; #    Use '|' for multiple channels
 our $keyword = "pony|cyber";
+our $signal = "peace|cyder";
 
 # programm
 our $user = getpwuid( $< );
@@ -40,8 +41,29 @@ Irssi::signal_add 'message public', 'sig_message_public';
 sub sig_message_public {
     my ($server, $msg, $nick, $nick_addr, $target) = @_;
     if ($target =~ m/#(?:$main_channel)/) { # only operate in these channels
+        # listen to signal to do something:
+        if ($msg =~ m/!(?:$signal)/i){ # listening for "!$keyword"
+            if ($msg =~ m/(\#)/i){
+                print "Y";
+                my @ary=split(/ /,$msg);
+                my $n = 0;
+                my $ne;
+                foreach (@ary){ $n++; if ($_ =~ m/(\#)/i){ $ne = $n - 1; } }
+                my $destination_channel = $ary[$ne];
+                # print $destination_channel;
+                $server->command("msg $target Hey $nick, du schickst ein Pony in den Channel $destination_channel");
+                get_pony(); # execute 'get_pony' and use a new pony
+                # print @pony; # uncomment for advanced debugging
+                print "[I] Debug-SendPony: $tmp"; 
+                # for my $s (@tmp_2){ print "$s\n"; } # uncomment for advanced debugging
+                for my $mlp (@pony){
+                    $server->command("msg $destination_channel $mlp");
+                }
+                $server->command("msg $destination_channel Dieses Pony wurde versendet durch $nick aus dem Channel '#ponyville'.")
+            }
+        }
         # listen to keyword to do something:
-        if ($msg =~ m/!(?:$keyword)/i){ # listening for "!$keyword"
+        elsif ($msg =~ m/!(?:$keyword)/i){ # listening for "!$keyword"
             $server->command("msg $target Hey $nick, du hast dir ein Pony gewünscht:");
             get_pony(); # execute 'get_pony' and use a new pony
             # print @pony; # uncomment for advanced debugging
@@ -51,7 +73,7 @@ sub sig_message_public {
                 $server->command("msg $target $mlp");
             }
         }
-    }
+    } 
     $server->command("/script load ponybot.pl");
 }
 
@@ -82,4 +104,5 @@ sub get_pony {
     close (DATEI);   
     `/bin/echo "$thispony" > /tmp/lastpony`
 }
+
 
