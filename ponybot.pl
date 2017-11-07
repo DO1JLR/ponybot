@@ -21,7 +21,7 @@ $VERSION = "1.0";
     contact         => 'l3d@see-base.de',
     name            => "Ponybot",
     description     => "A pony-irssi bot to draw colored ascii ponys in some channels.",
-    version         => "0.5",
+    version         => "0.6",
     status			=> "alpha",
     license         => "GPL-3.0"
 );
@@ -77,6 +77,7 @@ sub sig_message_public {
             for my $mlp (@pony){
                 $server->command("msg $target $mlp");
             }
+            my $hour = (localtime)[2];
             if ( $hour >= 23 or $hour < 4 ) {
                  $server->command("msg $target $nick: Es ist Zeit zum Schlafen. Spannende Traeume erwarten dich!")
             }
@@ -98,6 +99,7 @@ sub get_pony {
     my $thispony;
     if ( $hour >= 22 or $hour < 5 ) {
         $ponyfile = "luna.irc";
+        $thispony = 42;
     } else {
       $thispony = int(rand(int($#ascii) ));
       while ($thispony eq $lastpony){  $thispony = int(rand(int($#ascii) )); }
