@@ -57,10 +57,13 @@ sub sig_message_public {
                 # print @pony; # uncomment for advanced debugging
                 print "[I] Debug-SendPony: $tmp"; 
                 # for my $s (@tmp_2){ print "$s\n"; } # uncomment for advanced debugging
+                sleep 10;
                 for my $mlp (@pony){
                     $server->command("msg $destination_channel $mlp");
+                    sleep 0.6;
                 }
                 $server->command("msg $destination_channel Dieses Pony wurde versendet durch $nick aus dem Channel '#ponyville'.");
+                sleep 23;
                 $server->command("window close"); 
             }
         }
