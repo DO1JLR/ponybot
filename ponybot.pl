@@ -15,14 +15,14 @@ use strict;                     # Good practice
 use warnings;                   # Good practice
 use Irssi;                      # Für den Bot
 use vars qw($VERSION %IRSSI);
-$VERSION = "1.0";
+$VERSION = "1.1";
 %IRSSI = (
     authors         => "L3D",
     contact         => 'l3d@see-base.de',
     name            => "Ponybot",
     description     => "A pony-irssi bot to draw colored ascii ponys in some channels.",
-    version         => "0.6",
-    status			=> "alpha",
+    version         => "1.1",
+    status			=> "beta",
     license         => "GPL-3.0"
 );
 # important global Variables:
@@ -64,7 +64,7 @@ sub sig_message_public {
                 }
                 $server->command("msg $destination_channel Dieses Pony wurde versendet durch $nick aus dem Channel '#ponyville'.");
                 sleep 23;
-                $server->command("window close"); 
+#               $server->command("window close"); 
             }
         }
         # listen to keyword to do something:
