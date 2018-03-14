@@ -32,6 +32,7 @@ mkdir scripts
 ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/ponybot.pl
 mkdir scripts/autorun
 ln -s ~/.irssi/ponybot/ponybot.pl ~/.irssi/scripts/autorun/ponybot.pl
+touch /tmp/lastpony
 
 ```
 
